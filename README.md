@@ -1,0 +1,2 @@
+# RiVPN-manual
+RiVPN configuration
