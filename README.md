@@ -90,3 +90,26 @@ FeaturesConfig:
     }
   }
 ```
+Сохраняем файл и останавливаем сервис командой ```service mesh stop```
+
+#### :black_square_button: 2. Настройка iptables
+
+Для того, чтобы мы могли выходить в интернет через удаленный сервер нужно настроить NAT. 
+Для этого переходим в конфигурационный файл по пути ```/etc/iptables/rules.v4```
+
+Перед нами цепочка из правил, в цепочке ```*filter``` добавляем правило: ```-A FORWARD -i RiV-mesh -j ACCEPT``` -i RiV-mesh в моем случае - название интерфейса, которое я предварительно указал в конфиге RiVPN в блоке
+```# Local network interface name for TUN adapter, or "auto" to select
+  # an interface automatically, or "none" to run without TUN.
+  IfName: RiV-mesh
+````
+Название не принципиально важно менять, это сделано для моего личного удобства, в случае, если ```IfName: auto``` узнаем название интерфейса командой ```ifconfig``` или же ```ip a```.
+
+После этого переходим к цепочке ```*nat``` и добавляем в неё правило ```-A POSTROUTING -o eth0 -j MASQUERADE``` в моем случае eth0 - интерфейс выхода в интеронет, вы же должны указать назвавние своего интерфейса.
+ 
+Сохраняем файл и применяем правила командой ```iptables-restore /etc/iptables/rules.v4```
+
+Проверяем применились ли правила командой ```iptables -L -n -v```
+
+<img width="765" alt="1234" src="https://user-images.githubusercontent.com/122159872/222556043-6027a08a-e6d1-479e-b052-2cbaaecc19e1.png">
+
+#### :black_square_button: 3. 
