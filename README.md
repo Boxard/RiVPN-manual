@@ -112,4 +112,12 @@ FeaturesConfig:
 
 <img width="765" alt="1234" src="https://user-images.githubusercontent.com/122159872/222556043-6027a08a-e6d1-479e-b052-2cbaaecc19e1.png">
 
-#### :black_square_button: 3. 
+#### :black_square_button: 3. Включаем форваврдинг
+
+Открываем конфиг по пути ```/etc/sysctl.conf```, листаем в самый низ и добавляем строчку с этим содержанием:
+```net.ipv4.ip_forward=1```
+
+После этого сохраняем файл и применяем изменения командой ```sudo sysctl -p```
+
+На этом настройка окончена, запускаем сервис RiVPN на сервере командой ```service mesh start```
+После этого запускаем сервис на ПК под OS Windows через диспетчер задач ```Mesh``` с описанием RiV-mesh Service
